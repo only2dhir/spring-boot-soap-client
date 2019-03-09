@@ -44,7 +44,8 @@ public class SoapClientInterceptor implements ClientInterceptor {
             SOAPEnvelope soapEnvelope = soapPart.getEnvelope();
             SOAPBody soapBody = soapEnvelope.getBody();
             SOAPFault soapFault = soapBody.getFault();
-            System.out.println(soapFault.getFaultString());
+            logger.error(String.format("Error occurred while invoking web service - %s ",soapFault.getFaultString()));
+            //throw new RuntimeException(String.format("Error occurred while invoking web service - %s ",soapFault.getFaultString()));
             StringWriter sw = new StringWriter();
             TransformerFactory.newInstance().newTransformer().transform(
                     new DOMSource(soapFault), new StreamResult(sw));
